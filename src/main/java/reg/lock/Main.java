@@ -12,27 +12,29 @@ import com.pi4j.io.gpio.digital.DigitalState;
 import com.pi4j.platform.Platforms;
 import com.pi4j.util.Console;
 import java.lang.reflect.InvocationTargetException;
+import org.springframework.boot.*;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
-/**
- *
- * @author luca
- */
+@SpringBootApplication
+@RestController
 public class Main {
-
-    private static final int PIN_LED = 22; // PIN 15 = BCM 22
     private static final Console console = new Console();
+    static Context pi4j = null;
 
-    /**
-     * @param args the command line arguments
-     */
+    @GetMapping("/unlockTest/{testString}")
+    public String unlockTest(@PathVariable String testString){
+        console.print("Received " + testString);
+        return testString;
+    }
+
     public static void main(String[] args) throws Exception {
         console.box("Hello Rasbian world !");
-        Context pi4j = null;
         try {
             pi4j = Pi4J.newAutoContext();
-            new Main().run(pi4j);
-        } catch (InvocationTargetException e) {
-            console.println("Error: " + e.getTargetException().getMessage());
+            SpringApplication.run(Main.class, args);
         } catch (Exception e) {
             console.println("Error: " + e.getMessage());
             e.printStackTrace();
@@ -45,6 +47,7 @@ public class Main {
 
     private void run(Context pi4j) throws Exception {
         Platforms platforms = pi4j.platforms();
+        int PIN_LED = 22; // PIN 15 = BCM 22
 
         console.box("Pi4J PLATFORMS");
         console.println();

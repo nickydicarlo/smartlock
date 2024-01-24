@@ -2,7 +2,7 @@
 <project name="maven-antrun-" default="main">
   <target name="main">
     <property name="remote.run.jvmargs" value="" />
-    <property name="target.run.as.module" value="true" />
+    <property name="target.run.as.module" value="false" />
     <property name="local.dist.dir" value="C:\Users\nicky\IdeaProjects\smartlock\target" />
     <property name="remote.runtime.encoding" value="UTF-8" />
     <property name="dist.jar.name" value="smartlock" />
